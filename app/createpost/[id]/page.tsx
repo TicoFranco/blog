@@ -1,24 +1,26 @@
 "use client"
 import Header from "@/components/Header"
 import { useForm } from "react-hook-form"
-import { headerUser, ICreatePost } from "@/utils/types"
+import { IPost, Iuser } from "@/utils/types"
 import { useRouter} from "next/navigation"
 import { useEffect, useState } from "react"
-import { createPost } from "@/app/actions/createPost"
-import Modal from "@/components/Modal"
+import { createPost } from "@/app/actions/Posts/createPost"
+import ResultModal from "@/components/ResultModal"
 
 export default function createPostPage() {
   const router = useRouter()
-  const {register,setValue,handleSubmit,watch,formState: { errors }} = useForm<ICreatePost>()
+  const {register,setValue,handleSubmit,watch,formState: { errors }} = useForm<IPost>()
   const titlePreview = watch("title")
   const bodyPreview = watch("body")
   const [state,setState] = useState(false)
   const [result,setResult] = useState("")
-  const [user, setUser] = useState<headerUser | null>();
+  const [user, setUser] = useState<Iuser | null>();
   const onSubmit = handleSubmit(async (data) => {
     setResult("")
     if(user){
       data.user_id = user.id
+      data.username = user.name
+      data.user_avatar = user.avatar
       const res = await createPost(data)
       if(res){
        setResult("sucess")
@@ -88,7 +90,7 @@ export default function createPostPage() {
                 </div>
             </div>
 
-            {state ? <Modal result={result} setResult={setResult} state={state} setState={setState} sucessText='Post created' failureText='user not found or data provided is incorrect.'/> : null}
+            {state ? <ResultModal result={result} setResult={setResult} state={state} setState={setState} sucessText='Post created' failureText='user not found or data provided is incorrect.'/> : null}
         </div>
     </div>
   )

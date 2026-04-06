@@ -1,9 +1,9 @@
 "use client";
 import Header from "@/components/Header";
 import PostCard from "@/components/PostCard";
-import { IPost } from "@/utils/types";
 import { useEffect, useState } from "react";
-import { getPosts } from "./actions/getPosts";
+import { getPosts } from "./actions/Posts/getPosts";
+import { IPost } from "@/utils/types";
 
 export default function Home() {
   const [postsCards, setPostsCards] = useState<IPost[]>([]);

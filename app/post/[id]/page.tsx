@@ -2,26 +2,52 @@
 import React, { useEffect, useState } from 'react'
 import Header from '@/components/Header'
 import { useParams, useRouter } from 'next/navigation';
-import { IPost, postUserCreator } from '@/utils/types';
-import { getPost } from '@/app/actions/getPost';
-import { getUserById } from '@/app/actions/getUserById';
-
+import { getPost } from '@/app/actions/Posts/getPost';
+import CommentCard from '@/components/CommentCard';
+import { useForm } from "react-hook-form"
+import Link from 'next/link';
+import { postComment } from '@/app/actions/Comments/postComment';
+import { getCommentsPost } from '@/app/actions/Comments/getCommentsPost';
+//import { ICommentCard } from '@/utils/types';
+import { IComment, Iuser, IPost } from '@/utils/types';
 
 export default function Post() {
   const params = useParams<{id:string}>()
   const router = useRouter();
   const [post,setPost] = useState<IPost | null>(null)
-  const [user,setUser] = useState<postUserCreator | null>()
+  const [comments,setComments] = useState<IComment[]>([])
+  const {register,setValue,handleSubmit,formState:{errors}} = useForm<IComment>()
+  const [user, setUser] = useState<Iuser | null>();
+
+  const onSubmit = handleSubmit(async (data) =>{
+    const res = await postComment(data)
+    if(res){
+      const dateTime = new Date().toLocaleString("en-US",{month: "short",day: "2-digit",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true})
+      setValue("created_at",dateTime)
+      setComments((prev) => [...prev,data])
+    }
+  })
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser))
+    }
+  },[])
 
   useEffect(() => {
     getPost(params.id).then(setPost)
+    getCommentsPost(params.id).then(setComments)
   },[params.id])
 
   useEffect(() => {
-    if(post){
-      getUserById(post.user_id).then(setUser)
+    if(user && post){
+      setValue("username",user.name)
+      setValue("user_avatar",user.avatar)
+      setValue("user_id",user.id)
+      setValue("post_id",post.id)
     }
-  },[post])
+  },[user,post])
 
   return (
     <div className='min-h-screen'>
@@ -34,9 +60,9 @@ export default function Post() {
           </button>
           <div className='flex flex-col mt-10'>
             <div className='flex flex-row'>
-               <img className="w-10 h-10 rounded-full mt-1 mr-3" src={user?.avatar} alt="Rounded avatar"></img>
+               <img className="w-10 h-10 rounded-full mt-1 mr-3" src={post?.user_avatar} alt="Rounded avatar"></img>
                <div className='flex flex-col'>
-                 <p>{user?.name}</p>
+                 <p>{post?.username}</p>
                  <p>{post?.created_at}</p>
                </div>
             </div>
@@ -45,7 +71,57 @@ export default function Post() {
               <p className='break-words whitespace-pre-line'>{post?.body}</p>
             </div>
           </div>
+          <div>
+            <h1 className='mt-20 mb-5 text-4xl'>Comments</h1>
+            {comments.map((comment) => (<CommentCard username={comment.username} user_avatar={comment.user_avatar} created_at={comment.created_at} body={comment.body} />))}
+
+            {user ? 
+            <form onSubmit={onSubmit}>
+              <div className='w-full max-w-[500px] mb-4 border border-default rounded-lg bg-slate-500/60 shadow-sm'>
+                <div className='px-1 py-1.5 rounded-t-lg'>
+                  <label htmlFor="comment" className='sr-only'>Your comment</label>
+                  <textarea id="comment" rows={4} 
+                  className='block w-full max-w-[500px] px-0 text-sm text-white border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-gray-500' placeholder="Write a comment..." 
+                  {...register("body",{minLength:{value:1,message:"the Comment must have at least 1 character."}})} required></textarea>
+                </div>
+                <div className='flex items-center px-3 py-2 border-t border-gray-300'>
+                  <button type="submit" className="text-white bg-green-600 box-border border border-transparent hover:bg-green-700 focus:ring-4 focus:ring-white-300 shadow-sm font-medium leading-5 rounded-lg text-sm px-3 py-2 focus:outline-none cursor-pointer">Post comment</button>
+                </div>
+              </div>
+            </form> : 
+            <>
+            <div className='flex flex-row mb-5'>
+              <h1 className='text-lg mr-1'>You need to be logged in to leave a comment.</h1>
+              <Link className='text-lg text-green-500 hover:underline' href="/login">Log in</Link>
+            </div>
+            </>}
+
+          </div>
         </div>
     </div>
   )
 }
+
+// useEffect(() => {
+//    if(user && post){
+//      setNewComment((prev) => ({...prev,
+//        username: user.name,
+//        user_avatar: user.avatar,
+//        user_id: user.id,
+//        post_id: post.id
+//      }));
+//    }
+//  },[user,post])
+
+
+//const onSubmit = handleSubmit(async (data) =>{
+ //   const commentToSend = {...newcomment,body:data.comment}
+ //  setNewComment(commentToSend)
+  //  const res = await postComment(commentToSend)
+  //  if(res){
+  //    const dateTime = new Date().toLocaleString("en-US",{month: "short",day: "2-digit",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true})
+  //    setComments((prev) => [...prev,{user_avatar:commentToSend.user_avatar,username:commentToSend.username,body:commentToSend.body,created_at:dateTime}])
+  //  }
+  //})
+
+  //const [newcomment,setNewComment] = useState<IComment>()

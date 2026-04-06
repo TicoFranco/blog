@@ -2,13 +2,14 @@
 import React from 'react'
 import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import { headerUser } from '@/utils/types';
+import { Iuser } from '@/utils/types';
 
 export default function Header() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [user, setUser] = useState<headerUser | null>();
+  //const [user, setUser] = useState<headerUser | null>();
+  const [user, setUser] = useState<Iuser | null>();
 
   useEffect(() => {
     const storedUser = sessionStorage.getItem("user");
@@ -50,7 +51,7 @@ export default function Header() {
                     </div>
                     <ul className='p-2 text-sm text-gray-600 font-medium'>
                         <li>
-                           <a href="#" className="inline-flex items-center w-full p-2 hover:bg-gray-100 hover:text-gray-900 rounded cursor-pointer">Settings</a>
+                           <a className="inline-flex items-center w-full p-2 hover:bg-gray-100 hover:text-gray-900 rounded cursor-pointer" onClick={() => router.push(`/usersettings/${user.id}`)}>Settings</a>
                         </li>
                         <li>
                            <a className="inline-flex items-center w-full p-2 hover:bg-gray-100 hover:text-gray-900 rounded cursor-pointer" onClick={() => router.push(`/createpost/${user.id}`)}>Create a post</a>

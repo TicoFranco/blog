@@ -1,9 +1,9 @@
 "use client"
 import React from 'react'
-import { IPostCard } from '@/utils/types';
 import { useRouter } from 'next/navigation'
+import { IPost } from '@/utils/types';
 
-export default function PostCard({created_at,title,description,id}:IPostCard) {
+export default function PostCard({created_at,title,description,id}:Partial<IPost>) {
   const router = useRouter();
 
   return (

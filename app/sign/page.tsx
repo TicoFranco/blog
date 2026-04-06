@@ -3,16 +3,16 @@ import React from 'react'
 import Header from '@/components/Header'
 import { useForm } from "react-hook-form"
 import { useState } from 'react';
-import { FormDataSignUp } from '@/utils/types';
-import { postUser } from '../actions/postUser';
-import Modal from '@/components/Modal';
+import { postUser } from '../actions/Users/postUser';
+import ResultModal from '@/components/ResultModal';
+import { Iuser } from '@/utils/types';
 
 const avatars = ['/avatar_1.png','/avatar_2.png','/avatar_3.png','/avatar_4.png']
 
 export default function SignUp() {
   const [state,setState] = useState(false);
   const [result,setResult] = useState("");
-  const {register,setValue,handleSubmit,watch,formState: { errors }} = useForm<FormDataSignUp>()
+  const {register,setValue,handleSubmit,watch,formState: { errors }} = useForm<Iuser>({mode:"onChange"})
   const selectedAvatar = watch("avatar");
   const onSubmit = handleSubmit(async (data) => {
     setResult("")
@@ -67,7 +67,7 @@ export default function SignUp() {
                 <button type="submit" className="w-40 h-10 mx-25 my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 mr-2 focus:outline-none cursor-pointer">Sign Up</button>
             </form>
 
-            {state ? <Modal result={result} setResult={setResult} state={state} setState={setState} sucessText='Account created.' failureText='The data provided is incorrect or is already being used.'/> : null}
+            {state ? <ResultModal result={result} setResult={setResult} state={state} setState={setState} sucessText='Account created.' failureText='The data provided is incorrect or is already being used.'/> : null}
         </div>
     </div>
   )

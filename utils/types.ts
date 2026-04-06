@@ -1,49 +1,36 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react"
 
-export type ICreatePost = {
-    title:string
-    description:string
-    body:string
-    user_id:string
-}
-
-export type IUser = {
-  id:string
-  name:string
-  email: string
-  password:string
-  avatar:string
-}
-
-export type postUserCreator ={
-  name:string
-  avatar:string
-}
-
-export type headerUser = {
-  id:string
-  name:string
-  email:string
-  avatar:string
-}
-
-export type IPost = {
-    id:string
-    title:string
-    description:string
-    body:string
+export interface Iuser{
+    id:string,
+    name:string,
+    email:string,
+    password:string,
+    avatar:string,
     created_at:string
-    user_id:string
 }
 
-export interface IPostCard{
-    id:string
-    created_at:string
-    title:string
-    description:string
+export interface IPost{
+    id:string,
+    created_at:string,
+    title:string,
+    description:string,
+    body:string,
+    user_id:string,
+    username:string,
+    user_avatar:string
 }
 
-export interface IModal{
+export interface IComment{
+    id:string,
+    created_at:string,
+    username:string,
+    user_avatar:string,
+    user_id:string,
+    post_id:string,
+    body:string
+}
+
+export interface IResultModal{
   state:boolean
   result:string
   setState:Dispatch<SetStateAction<boolean>>
@@ -52,15 +39,17 @@ export interface IModal{
   failureText:string
 }
 
-export type FormDataLogin = {
-  email: string
-  password: string
+export interface IUserSettingsInputModal{
+  state:boolean
+  setState:Dispatch<SetStateAction<boolean>>
+  attribute:string
+  user:Partial<Iuser>
+  onSubmitForm: (data:formDataUserSettings) => void
 }
 
-export type FormDataSignUp = {
-  name:string
-  email: string
-  password: string
+export type formDataUserSettings = {
+  name:string,
+  oldPassword:string,
+  password:string,
   avatar:string
 }
- 

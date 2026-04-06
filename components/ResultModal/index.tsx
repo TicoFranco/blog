@@ -1,8 +1,8 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { IModal } from "@/utils/types";
+import { IResultModal } from "@/utils/types";
 
-export default function Modal({state,result,setState,setResult,sucessText,failureText}:IModal) {
+export default function ResultModal({state,result,setState,setResult,sucessText,failureText}:IResultModal) {
   const router = useRouter()
 
   return (
