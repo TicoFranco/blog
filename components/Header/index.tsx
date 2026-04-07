@@ -8,7 +8,6 @@ export default function Header() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  //const [user, setUser] = useState<headerUser | null>();
   const [user, setUser] = useState<Iuser | null>();
 
   useEffect(() => {

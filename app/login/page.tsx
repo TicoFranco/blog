@@ -3,7 +3,6 @@ import React from 'react'
 import Header from '@/components/Header'
 import { useForm } from "react-hook-form"
 import Link from 'next/link'
-//import { FormDataLogin } from '@/utils/types';
 import { getUser } from '../actions/Users/getUser';
 import { useState } from 'react';
 import ResultModal from '@/components/ResultModal';
@@ -47,7 +46,7 @@ export default function Login() {
                </div>
                <button type="submit" className="w-40 h-10 mx-25 my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 mr-2 focus:outline-none cursor-pointer">Sign In</button>
             </form>
-            <p className=''>Don't have an account yet? <Link className='text-green-500 hover:underline' href={'/sign'}>Sign up</Link></p>
+            <p>Don't have an account yet? <Link className='text-green-500 hover:underline' href={'/sign'}>Sign up</Link></p>
         </div>
 
         {state ? <ResultModal result={result} setResult={setResult} state={state} setState={setState} sucessText='Login successfully' failureText='Your email or password is incorrect.'/>: null}

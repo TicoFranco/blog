@@ -8,7 +8,6 @@ import { useForm } from "react-hook-form"
 import Link from 'next/link';
 import { postComment } from '@/app/actions/Comments/postComment';
 import { getCommentsPost } from '@/app/actions/Comments/getCommentsPost';
-//import { ICommentCard } from '@/utils/types';
 import { IComment, Iuser, IPost } from '@/utils/types';
 
 export default function Post() {
@@ -101,27 +100,3 @@ export default function Post() {
     </div>
   )
 }
-
-// useEffect(() => {
-//    if(user && post){
-//      setNewComment((prev) => ({...prev,
-//        username: user.name,
-//        user_avatar: user.avatar,
-//        user_id: user.id,
-//        post_id: post.id
-//      }));
-//    }
-//  },[user,post])
-
-
-//const onSubmit = handleSubmit(async (data) =>{
- //   const commentToSend = {...newcomment,body:data.comment}
- //  setNewComment(commentToSend)
-  //  const res = await postComment(commentToSend)
-  //  if(res){
-  //    const dateTime = new Date().toLocaleString("en-US",{month: "short",day: "2-digit",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true})
-  //    setComments((prev) => [...prev,{user_avatar:commentToSend.user_avatar,username:commentToSend.username,body:commentToSend.body,created_at:dateTime}])
-  //  }
-  //})
-
-  //const [newcomment,setNewComment] = useState<IComment>()

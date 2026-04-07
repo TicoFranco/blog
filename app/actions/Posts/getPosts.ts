@@ -1,14 +1,14 @@
 "use server"
 
-import { IPost } from "@/utils/types"
+import { IPost,env } from "@/utils/types"
 
 export const getPosts = async () => {
     try{
-        const response = await fetch(`https://mybezvicayzlelthemaf.supabase.co/rest/v1/Posts?select=id,title,description,created_at`,{
+        const response = await fetch(`${env.SUPABASE_URL}/Posts?select=id,title,description,created_at`,{
             method:"GET",
             headers:{
-                "apikey":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15YmV6dmljYXl6bGVsdGhlbWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MzU1NTUsImV4cCI6MjA4ODIxMTU1NX0.IPuZG6GXiLRK-Yw4Q-7dpRrgVdXyoOKYSEOgnewPhsM",
-                "Authorization":"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im15YmV6dmljYXl6bGVsdGhlbWFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI2MzU1NTUsImV4cCI6MjA4ODIxMTU1NX0.IPuZG6GXiLRK-Yw4Q-7dpRrgVdXyoOKYSEOgnewPhsM"
+               "apikey": env.SUPABASE_KEY,
+               "Authorization":`Bearer ${env.SUPABASE_KEY}`
             }
         })
 

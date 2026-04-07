@@ -31,10 +31,6 @@ export default function UserSettingsInputModal({user,attribute,setState,onSubmit
                 <button type="submit" className="w-40 h-10 my-5 text-white bg-green-500 box-border border border-transparent disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed hover:bg-green-700 shadow-xs font-medium leading-5 rounded-md text-base px-4 mr-2 focus:outline-none cursor-pointer" disabled={!isValid}>Confirm Change</button>
                 </> : attribute === "password" ? 
                 <>
-                <label htmlFor="currentPassword" className="block mb-2.5 text-2xl font-medium text-heading text-white">Current Password:</label>
-                <input type="password" id="currentPassword" className="bg-inherit border border-gray-600 text-heading text-sm rounded-md focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs" 
-                  required {...register("oldPassword",{required:"Password is required.",minLength:{value:3,message:"The password must have at least 3 characters."},maxLength:{value:15,message:"The password can have a maximum of 15 characters."}})} />
-                <p className="my-2.5 text-sm text-red-600">{errors.oldPassword?.message}</p>
 
                 <label htmlFor="newPassword" className="block mb-2.5 mt-2 text-2xl font-medium text-heading text-white">New Password:</label>
                 <input type="password" id="newPassword" className="bg-inherit border border-gray-600 text-heading text-sm rounded-md focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs" 
@@ -42,13 +38,21 @@ export default function UserSettingsInputModal({user,attribute,setState,onSubmit
                 <p className="my-2.5 text-sm text-red-600">{errors.password?.message}</p>
 
                 <button type="submit" className="w-40 h-10 my-5 text-white bg-green-500 box-border border border-transparent disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-base px-4 mr-2 focus:outline-none cursor-pointer" disabled={!isValid}>Confirm Change</button>
-                </>: 
+                </>: attribute === "avatar" ?
                 <>
                 <h3>Choose new avatar:</h3>
                 <div className='flex flex-row my-2'>
                   {avatars.map((avatar) => (<img key={avatar} src={avatar} onClick={() => setValue("avatar",avatar,{ shouldValidate: true })} className={`w-16 h-16 rounded-full mr-2 cursor-pointer border-2 transition ${selectedAvatar === avatar ? "border-blue-600 scale-110" : "border-transparent"}`}/>))}
                 </div>
                 <button type="submit" className="w-40 h-10 my-5 text-white bg-green-500 box-border border border-transparent disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-base px-4 mr-2 focus:outline-none cursor-pointer" disabled={!selectedAvatar}>Confirm Change</button>
+                </> : 
+                <>
+                <label htmlFor="currentPassword" className="block mb-2.5 text-2xl font-medium text-heading text-white">digit your password to continue:</label>
+                <input type="password" id="currentPassword" className="bg-inherit border border-gray-600 text-heading text-sm rounded-md focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow-xs" 
+                  required {...register("oldPassword",{required:"Password is required.",minLength:{value:3,message:"The password must have at least 3 characters."},maxLength:{value:15,message:"The password can have a maximum of 15 characters."}})} />
+                <p className="my-2.5 text-sm text-red-600">{errors.oldPassword?.message}</p>
+
+                <button type="submit" className="w-40 h-10 my-5 text-white bg-green-500 box-border border border-transparent disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-base px-4 mr-2 focus:outline-none cursor-pointer" disabled={!isValid}>Confirm Changes</button>
                 </>}
                 </form>
               </div>
