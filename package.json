@@ -2,7 +2,7 @@
   "name": "blog",
   "version": "1.0.0",
   "main": "index.js",
-  "private":"true",
+  "private":true,
   "workspaces":["frontend","backend"],
   "scripts": {
     "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w backend\""
