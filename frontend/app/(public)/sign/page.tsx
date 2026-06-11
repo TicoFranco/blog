@@ -32,7 +32,7 @@ export default function SignUp() {
         <Header></Header>
         <div className="flex flex-col justify-center items-center text-white mt-8">
             <h1 className='text-7xl mb-9'>Sign Up</h1>
-            <form className='w-90 flex flex-col' onSubmit={onSubmit}>
+            <form className='w-full max-w-3xs flex flex-col' onSubmit={onSubmit}>
                 <div>
                     <label htmlFor="username" className="block mb-2.5 text-xl font-medium text-heading">Username</label>
                     <input type="text" id="username" 
@@ -62,11 +62,11 @@ export default function SignUp() {
                    </div>
                    <p className="my-2.5 text-sm text-red-600">{errors.avatarUrl?.message}</p>
                 </div>
-                <div className="flex items-center mb-4 mt-4">
+                <div className="flex items-center my-4">
                    <input id="terms-checkbox" type="checkbox" value="" className="w-4 h-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft" required />
                    <label htmlFor="terms-checkbox" className="select-none ms-2 text-sm font-medium text-heading">I agree with the terms and conditions.</label>
                 </div>
-                <button type="submit" className="w-40 h-10 mx-25 my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 mr-2 focus:outline-none cursor-pointer">Sign Up</button>
+                <button type="submit" className="w-40 h-10 mx-auto my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 focus:outline-none cursor-pointer">Sign Up</button>
             </form>
 
             {state ? <ResultModal result={result} setResult={setResult} state={state} setState={setState} sucessText='Account created.' failureText={failureText} /> : null}

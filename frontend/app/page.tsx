@@ -17,7 +17,7 @@ export default function Home() {
       <Header></Header>
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-7xl m-3 mb-7 text-white">Recent Posts:</h1>
-        {postsCards.map((postCard) => <PostCard key={postCard.id} id={postCard.id} title={postCard.title} description={postCard.description} updatedAt={postCard.updatedAt}></PostCard>)}
+        {postsCards.map((postCard) => <PostCard key={postCard.id} id={postCard.id} title={postCard.title} description={postCard.description} updatedAt={postCard.updatedAt} editable={false}></PostCard>)}
       </div>
     </main>
   );

@@ -24,7 +24,7 @@ export default function Post() {
     const res = await postComment(params.id,data.body)
     if("success" in res && user){
       const dateTime = new Date().toLocaleString("en-US",{month: "short",day: "2-digit",year: "numeric",hour: "2-digit",minute: "2-digit",hour12: true})
-      const newComment:IComment = {id:crypto.randomUUID(),updatedAt:dateTime,body:data.body,user:{id:user?.id,name:user?.name,avatarUrl:user?.avatarUrl}}
+      const newComment:IComment = {id:crypto.randomUUID(),updatedAt:dateTime,body:data.body,user:{id:user?.id,name:user?.name,avatarUrl:user?.avatarUrl},editable:false}
       setComments((prev) => [...prev,newComment])
     }else{
       setFailureText(res.error)
@@ -71,12 +71,12 @@ export default function Post() {
           </div>
           <div>
             <h1 className='mt-20 mb-5 text-4xl'>Comments</h1>
-            {comments.map((comment) => (<CommentCard key={comment.id} id={comment.id} updatedAt={comment.updatedAt} user={comment.user} body={comment.body} />))}
+            {comments.map((comment) => (<CommentCard key={comment.id} id={comment.id} updatedAt={comment.updatedAt} user={comment.user} body={comment.body} editable={false} />))}
 
             {user ?
             <>
             <form onSubmit={onSubmit}>
-              <div className='w-full max-w-[500px] mb-4 border border-default rounded-lg bg-slate-500/60 shadow-sm'>
+              <div className='w-full max-w-[290px] my-6 border border-default rounded-lg bg-slate-500/60 shadow-sm sm:max-w-[500px]'>
                 <div className='px-1 py-1.5 rounded-t-lg'>
                   <label htmlFor="comment" className='sr-only'>Your comment</label>
                   <textarea id="comment" rows={4} 
@@ -91,9 +91,10 @@ export default function Post() {
             {failure ? <p className='my-2.5 text-sm text-red-600'>{failureText}</p> : null}
             </>  : 
             <>
-            <div className='flex flex-row mb-5'>
-              <h1 className='text-lg mr-1'>You need to be logged in to leave a comment.</h1>
-              <Link className='text-lg text-green-500 hover:underline' href="/login">Log in</Link>
+            <div className='flex flex-row my-5'>
+              <h1 className='text-lg mr-1'>You need to be logged in to leave a comment.
+                <Link className='text-lg text-green-500 hover:underline' href="/login"> Log in</Link>
+              </h1>
             </div>
             </>}
 

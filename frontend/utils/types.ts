@@ -28,23 +28,24 @@ export interface IComment{
     id:string,
     body:string,
     updatedAt:string,
-    user:{id:string,name:string,avatarUrl:string}
+    user:{id:string,name:string,avatarUrl:string},
+    editable:boolean
 }
 
 export interface IResultModal{
-  state:boolean
-  result:string
-  setState:Dispatch<SetStateAction<boolean>>
-  setResult:Dispatch<SetStateAction<string>>
-  sucessText:string
+  state:boolean,
+  result:string,
+  setState:Dispatch<SetStateAction<boolean>>,
+  setResult:Dispatch<SetStateAction<string>>,
+  sucessText:string,
   failureText:string
 }
 
 export interface IUserSettingsInputModal{
-  state:boolean
-  setState:Dispatch<SetStateAction<boolean>>
-  attribute:string
-  user:Partial<Iuser>
+  state:boolean,
+  setState:Dispatch<SetStateAction<boolean>>,
+  attribute:string,
+  user:Partial<Iuser>,
   onSubmitForm: (data:formDataUserSettings) => void
 }
 
@@ -53,4 +54,19 @@ export type formDataUserSettings = {
   oldPassword:string,
   password:string,
   avatar:string
+}
+
+export interface PostCardProps{
+  id:string,
+  title:string,
+  description:string,
+  updatedAt:string,
+  editable:boolean
+}
+
+export interface DeleteUserInteractionModalProps{
+  item:string,
+  state:boolean,
+  setState:Dispatch<SetStateAction<boolean>>
+  confirmDelete: (res:boolean) => void
 }

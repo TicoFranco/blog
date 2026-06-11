@@ -33,7 +33,7 @@ export default function Login() {
         <Header></Header>
         <div className="flex flex-col justify-center items-center text-white mt-8">
             <h1 className='text-5xl my-4'>Login</h1>
-            <form onSubmit={onSubmit} className='w-90 flex flex-col'>
+            <form onSubmit={onSubmit} className='w-full max-w-3xs flex flex-col sm:max-w-sm'>
                <div>
                   <label htmlFor="email" className="block mb-2.5 text-sm font-medium text-heading text-white">E-mail</label>
                   <input type="email" id="email" 
@@ -48,7 +48,7 @@ export default function Login() {
                    required  {...register("password",{required:"Password is required.",minLength:{value:4,message:"invalid password format."},maxLength:{value:15,message:"invalid password format."}})}/>
                    <p className="my-2.5 text-sm text-red-600">{errors.password?.message}</p>
                </div>
-               <button type="submit" className="w-40 h-10 mx-25 my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 mr-2 focus:outline-none cursor-pointer">Sign In</button>
+               <button type="submit" className="w-40 h-10 mx-auto my-5 text-white bg-green-500 box-border border border-transparent hover:bg-green-700  shadow-xs font-medium leading-5 rounded-md text-xl px-4 focus:outline-none cursor-pointer">Sign In</button>
             </form>
             <p>Don't have an account yet? <Link className='text-green-500 hover:underline' href={'/sign'}>Sign up</Link></p>
         </div>

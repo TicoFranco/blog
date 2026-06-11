@@ -23,11 +23,11 @@ interface deletePostProps{
 
 export class PostServices{
     async findAllPosts(){
-        return await prisma.post.findMany({select:{id:true,title:true,description:true,body:true,updatedAt:true}})
+        return await prisma.post.findMany({select:{id:true,title:true,description:true,updatedAt:true}})
     }
 
     async findAllPostsByUser(authorId:string){
-        return await prisma.post.findMany({where:{authorId:authorId},select:{id:true,title:true,description:true,body:true,updatedAt:true}})
+        return await prisma.post.findMany({where:{authorId:authorId},select:{id:true,title:true,description:true,updatedAt:true}})
     }
 
     async findPostById(id:string){

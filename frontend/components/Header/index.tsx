@@ -4,12 +4,20 @@ import { useRouter } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { useUserContextApi } from '@/contexts/UserContext';
 import { logoutUser } from '@/app/services/Users/logoutUser';
+import { getCookieUser } from '@/app/services/Users/getCookieUser';
 
 export default function Header() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const {user,setUser} = useUserContextApi()
+
+  async function verifySession(){
+    const verify = await getCookieUser()
+    if("error" in verify){
+      await logout()
+    }
+  }
 
   async function logout(){
     const res = await logoutUser()
@@ -21,7 +29,7 @@ export default function Header() {
     }
   }
 
-  useEffect(() => {  
+  useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
         setOpen(false);
@@ -30,7 +38,11 @@ export default function Header() {
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-   }, []);
+  }, []);
+
+  useEffect(() => {
+    verifySession()
+  },[])
 
   return (
     <header>
